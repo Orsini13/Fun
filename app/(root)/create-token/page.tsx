@@ -1,3 +1,4 @@
+import TokenForm from '@/components/TokenForm'
 import React from 'react'
 
 const page = () => {
@@ -8,6 +9,10 @@ const page = () => {
                 Launch your Token <br /> on DumzFun
             </article>
 
+            <TokenForm
+            
+            
+            />
         </section>
     )
 }

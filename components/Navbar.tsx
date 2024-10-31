@@ -1,6 +1,8 @@
+"use client"
 import React from 'react'
 import { navLinks } from '@/constants'
 import { usePathname } from 'next/navigation'
+import { cn } from '@/lib/utils';
 
 const Navbar = () => {
 
@@ -16,10 +18,15 @@ const Navbar = () => {
 
 
             <div className="flex flex-row gap-10 ">
-                {navLinks.map((item)=>{
-                    //                                     const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`)
+                {navLinks.map((item) => {
+                    const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`)
 
-                    return (<a href={item.route}> <h1 className="navlink">{item.label}</h1> </a> )
+                    return (<a href={item.route} key={item.id}>
+                        <h1 className={cn('navlink', { 'bg-bank-gradient': isActive })}
+                        >
+                            {item.label}
+                        </h1>
+                    </a>)
                 })}
             </div>
 
