@@ -31,7 +31,7 @@ const Navbar = () => {
             </div>
 
             <div className="sm:flex hidden flex-row justify-end gap-4">
-                <button className="text-[#3C3D37] bg-blue-600 py-1 px-7 rounded-lg font-bold hover:bg-opacity-80">
+                <button className="text-white bg-blue-600 py-1 px-5 rounded-lg font-bold hover:bg-opacity-80">
                     connect wallet
                 </button>
             </div>

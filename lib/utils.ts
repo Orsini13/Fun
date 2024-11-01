@@ -10,6 +10,9 @@ export const authFormSchema = () =>
   z.object({
     // both
     name: z.string().max(20),
-    symbol: z.string().min(8),
-    description: z.string().min(20),
+    symbol: z.string().min(3).max(6),
+    description: z.string().min(5),
+    twitterLink: z.string().min(5),
+    telegramLink: z.string().min(5),
+    websiteLink: z.string().min(5),
   })

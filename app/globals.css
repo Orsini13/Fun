@@ -51,6 +51,29 @@
   .navlink{
     @apply text-18 text-gray-50 hover:text-[#eefceecc] cursor-pointer
   }
+  /* form */
+    .auth-form {
+    @apply flex min-h-screen w-full max-w-[420px] flex-col justify-center gap-5 py-10 md:gap-8;
+  }
+ .input-class {
+    @apply text-16 placeholder:text-16 rounded-lg bg-transparent border-0.2 border-solid border-blue-800 border-l-blue-500 text-white placeholder:text-gray-500;
+  }
+
+  .form-item {
+    @apply flex flex-col gap-1.5;
+  }
+
+  .form-label {
+    @apply text-14 w-full max-w-[280px] font-medium text-gray-50;
+  }
+
+  .form-message {
+    @apply text-12 text-red-500;
+  }
+
+  .form-btn {
+    @apply text-16 rounded-lg border border-bankGradient bg-bank-gradient font-semibold text-white shadow-form;
+  }
 }
 @layer base {
   :root {

@@ -26,37 +26,37 @@ interface CustomForm {
 }
 
 const CustomForm = ({ control, name, label, placeholder }: CustomForm) => {
-  return (
-    <div>
-          <FormField
-              control={control}
-              name={name}
-              render={({ field }) => (
+    return (
+        <div>
+            <FormField
+                control={control}
+                name={name}
+                render={({ field }) => (
 
-                  <div className='form-item'>
-                      <FormLabel className='form-label'>
-                          {label}
-                      </FormLabel>
-                      <div className='flex w-full flex-col'>
-                          <FormControl >
-                              <Input
-                                  placeholder={placeholder}
-                                  className='input-class'
-                                  type={name === 'name' || 'description' ? 'text' : 'url'}
-                                  {...field}
-                              />
-                          </FormControl>
+                    <div className='form-item'>
+                        <FormLabel className='form-label'>
+                            {label}
+                        </FormLabel>
+                        <div className='flex w-full flex-col'>
+                            <FormControl >
+                                <Input
+                                    placeholder={placeholder}
+                                    className='input-class'
+                                    type={name === 'name' || 'symbol' || 'description' ? 'text' : 'url'}
+                                    {...field}
+                                />
+                            </FormControl>
 
-                          <FormMessage className='form-message mt-2' />
+                            <FormMessage className='form-message mt-2' />
 
 
-                      </div>
-                  </div>
+                        </div>
+                    </div>
 
-              )}
-          />
-    </div>
-  )
+                )}
+            />
+        </div>
+    )
 }
 
 export default CustomForm
