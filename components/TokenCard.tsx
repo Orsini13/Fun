@@ -2,6 +2,8 @@
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { cards } from '@/constants'
+// import AnimatedCounter from './AnimatedCounter'
+
 
 const TokenCard = () => {
     const [isActive, setIsActive] = useState(false)
