@@ -1,3 +1,5 @@
+import { symbol } from "zod"
+
 export const navLinks = [
   {
     route: '/create-token',
@@ -19,4 +21,16 @@ export const navLinks = [
     label: 'How it works',
     id: 4,
   },
+]
+
+export const cards = [
+ {
+  img: '/icons/bearport.jpg',
+  creator: '0z737373737373',
+  time: '2mins ago',
+  symbol: '$tkn',
+  marketcap: '436.04k',
+  id: 1
+ }
+
 ]

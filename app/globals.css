@@ -72,7 +72,13 @@
   }
 
   .form-btn {
-    @apply text-16 rounded-lg border border-bankGradient bg-bank-gradient font-semibold text-white shadow-form;
+    @apply text-16 rounded-lg border border-bankGradient font-semibold text-white shadow-form;
+  }
+  .button{
+    @apply bg-blue-500 justify-center items-center
+  }
+  .borders{
+    @apply border-0.2 border-solid border-blue-800 border-l-blue-500
   }
 }
 @layer base {

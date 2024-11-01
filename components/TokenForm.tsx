@@ -62,7 +62,7 @@ const TokenForm = () => {
 
                     <div className='flex flex-col gap-4'>
                         <Button type="submit"
-                        className='bg-blue-500 justify-center items-center'>
+                        className='button'>
                             <h1>Create Token</h1>
                             <Loader2 size={20} className='animate-spin' />
 
