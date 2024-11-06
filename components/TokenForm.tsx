@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,23 +13,22 @@ import { Loader2 } from "lucide-react";
 import { createDataItemSigner, message } from "@permaweb/aoconnect";
 
 const TokenForm = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const formSchema = authFormSchema();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             Name: "",
             Ticker: "",
-            description: "",
-            telegramLink: "",
-            twitterLink: "",
-            InitialSupply: "10000000000000", // 10 * 10 ^ 12 (12 decimals)
-            Logo: "pic.png", // Should be a reference to the image
-            websiteLink: "",
+            InitialSupply: "", // 10 * 10 ^ 12 (12 decimals)
+            Logo: "", // Should be a reference to the image
         },
     });
-    const onSubmit = async (data: z.infer<typeof formSchema>) => {
-        console.log(data);
 
+    const onSubmit = async (data: z.infer<typeof formSchema>) => {
+        console.log("Form data:", data);
+        setIsLoading(true);
+    
         try {
             const userPermissions = await window.arweaveWallet.getPermissions();
 
@@ -52,26 +51,27 @@ const TokenForm = () => {
             // console.log(
             //     await window.arweaveWallet.getActivePublicKey(["ACCESS_PUBLIC_KEY"])
             // );
-
+            const initialSupplyFormatted = (parseFloat(data.InitialSupply) * 1e12).toString();
+            console.log("Formatted initial supply:", initialSupplyFormatted);
+            
             const messageId = await message({
                 process: process.env.NEXT_PUBLIC_AO_PROCESS_ID as string,
                 signer: createDataItemSigner(window.arweaveWallet),
-                // tags: [{ name: "Action", value: "Eval" }],
                 tags: [{ name: "Action", value: "Create" }],
                 data: JSON.stringify({
                     Name: data.Name,
                     Ticker: data.Ticker,
-                    InitialSupply: data.InitialSupply,
+                    InitialSupply: initialSupplyFormatted,
                     Logo: data.Logo,
                 }),
             });
-
-            // return;
-            console.log("messageId:", messageId);
+    
+            console.log("Message ID:", messageId);
+            setIsLoading(false);
             return messageId;
         } catch (error) {
-            console.log("messageToAO -> error:", error);
-            return "";
+            console.error("Error in submitting form:", error);
+            setIsLoading(false);
         }
     };
 
@@ -79,7 +79,10 @@ const TokenForm = () => {
         <div>
             <Form {...form}>
                 <form
-                    onSubmit={form.handleSubmit(onSubmit)}
+                     onSubmit={(event) => {
+                        event.preventDefault(); // Prevent default to see if it changes behavior
+                        form.handleSubmit(onSubmit)(event); // Explicitly calling handleSubmit
+                    }}
                     className="space-y-6"
                 >
                     <>
@@ -97,42 +100,33 @@ const TokenForm = () => {
                                     placeholder="Enter your Token symbol"
                                     control={form.control}
                                 />
+                                <CustomForm
+                                    name="InitialSupply"
+                                    label="Initial Supply"
+                                    placeholder="Enter your initial supply value"
+                                    control={form.control}
+                                />
                             </div>
-                            <InputFile />
-                        </div>
-
-                        <div className=" flex flex-col gap-6">
-                            <CustomForm
-                                name="description"
-                                label="Description"
-                                placeholder="Enter your Description"
-                                control={form.control}
-                            />
-                            <CustomForm
-                                name="twitterLink"
-                                label="Twitter link"
-                                placeholder="Enter your Twitter link"
-                                control={form.control}
-                            />
-                            <CustomForm
-                                name="telegramLink"
-                                label="Telegram link"
-                                placeholder="Enter your Telegram link"
-                                control={form.control}
-                            />
-                            <CustomForm
-                                name="websiteLink"
-                                label="Website link"
-                                placeholder="Enter your Website link"
-                                control={form.control}
+                            <InputFile
+                                onFileSelect={(file, imageId) => {
+                                    console.log("File selected:", file);
+                                    console.log("Image ID:", imageId);
+                            
+                                    if (file && imageId) {
+                                        form.setValue("Logo", imageId); // Set form value
+                                    }
+                                }}
                             />
                         </div>
                     </>
 
                     <div className="flex flex-col gap-4">
                         <Button type="submit" className="button">
-                            <h1>Create Token</h1>
-                            <Loader2 size={20} className="animate-spin" />
+                            {!isLoading ? (
+                                "Create Token"
+                            ) : (
+                                <Loader2 size={20} className="animate-spin" />
+                            )}
                         </Button>
                     </div>
                 </form>
