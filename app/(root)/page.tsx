@@ -1,11 +1,31 @@
-const Home = () => {
-  return (
-    <section >
+import TokenCard from '@/components/TokenCard';
+import HomeDisplays from '@/components/HomeDisplays';
+import { Button } from '@/components/ui/button';
+import React from 'react'
 
-    home
+const Display = () => {
+  return (
+    <section className='justify-center items-center flex flex-col'>
+
+      <header className='text-36 text-white m-auto my-14'>
+        Best Tokens and NFTs Launch on...
+      </header>
+
+      <Button className='button mb-10'>
+        Create Token
+      </Button>
+
+      <TokenCard />
+      
+      <div>
+        <HomeDisplays />
+      </div>
+
+
+
 
     </section>
   )
 }
 
-export default Home
+export default Display;

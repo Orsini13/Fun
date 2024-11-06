@@ -49,7 +49,7 @@ const Navbar = () => {
                         <a href={item.route} key={item.id}>
                             <h1
                                 className={cn("navlink", {
-                                    "bg-bank-gradient": isActive,
+                                    "bg-blue-950": isActive,
                                 })}
                             >
                                 {item.label}

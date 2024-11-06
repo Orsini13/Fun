@@ -32,5 +32,46 @@ export const cards = [
   marketcap: '436.04k',
   id: 1
  }
-
 ]
+ export const readyCards = [
+     {
+         img: "/icons/bearport.jpg",
+         creator: "0z737373737373",
+         time: "2mins ago",
+         symbol: "$tkn",
+         marketcap: "436.04k",
+         id: 0,
+     },
+     {
+         img: "/icons/bearport.jpg",
+         creator: "0z737373737373",
+         time: "2mins ago",
+         symbol: "$tkn",
+         marketcap: "436.04k",
+         id: 1,
+     },
+     {
+         img: "/icons/bearport.jpg",
+         creator: "0z737373737373",
+         time: "2mins ago",
+         symbol: "$tkn",
+         marketcap: "436.04k",
+         id: 2,
+     },
+     {
+         img: "/icons/bearport.jpg",
+         creator: "0z737373737373",
+         time: "2mins ago",
+         symbol: "$tkn",
+         marketcap: "436.04k",
+         id: 3,
+     },
+     {
+         img: "/icons/bearport.jpg",
+         creator: "0z737373737373",
+         time: "2mins ago",
+         symbol: "$tkn",
+         marketcap: "436.04k",
+         id: 4,
+     },
+ ];
