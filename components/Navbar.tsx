@@ -3,6 +3,7 @@ import React from 'react'
 import { navLinks } from '@/constants'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 const Navbar = () => {
 
@@ -19,14 +20,15 @@ const Navbar = () => {
 
             <div className="flex flex-row gap-10 ">
                 {navLinks.map((item) => {
-                    const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`)
+                    const isActive = pathname === item.route || pathname.startsWith(`/${item.route}`)
 
-                    return (<a href={item.route} key={item.id}>
-                        <h1 className={cn('navlink', { 'bg-bank-gradient': isActive })}
+                    return (
+                    <Link href={item.route} key={item.label}>
+                            <h1 className={cn('navlink', { 'bg-blue-950': isActive })}
                         >
                             {item.label}
                         </h1>
-                    </a>)
+                    </Link>)
                 })}
             </div>
 
