@@ -10,7 +10,7 @@ import CustomForm from "./CustomForm";
 import Image from "next/image";
 import InputFile from "./InputFile";
 import { Loader2 } from "lucide-react";
-import { createDataItemSigner, message } from "@permaweb/aoconnect";
+import { createDataItemSigner, message, spawn } from "@permaweb/aoconnect";
 
 const TokenForm = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +28,7 @@ const TokenForm = () => {
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         console.log("Form data:", data);
         setIsLoading(true);
-    
+
         try {
             const userPermissions = await window.arweaveWallet.getPermissions();
 
@@ -43,29 +43,38 @@ const TokenForm = () => {
                 );
             }
 
-            console.log(window.arweaveWallet);
-            console.log(
-                await window.arweaveWallet.getActiveAddress(["ACCESS_ADDRESS"])
-            );
-            console.log(await window.arweaveWallet.getPermissions());
-            // console.log(
-            //     await window.arweaveWallet.getActivePublicKey(["ACCESS_PUBLIC_KEY"])
-            // );
-            const initialSupplyFormatted = (parseFloat(data.InitialSupply) * 1e12).toString();
+            const initialSupplyFormatted = (
+                parseFloat(data.InitialSupply) * 1e12
+            ).toString();
             console.log("Formatted initial supply:", initialSupplyFormatted);
-            
-            const messageId = await message({
-                process: process.env.NEXT_PUBLIC_AO_PROCESS_ID as string,
+
+            const messageId = await spawn({
+                scheduler: process.env.NEXT_PUBLIC_AO_SCHEDULER as string,
+                // module: process.env.NEXT_PUBLIC_AO_PROCESS_ID as string,
+                module: process.env.NEXT_PUBLIC_AO_MODULE as string,
                 signer: createDataItemSigner(window.arweaveWallet),
-                tags: [{ name: "Action", value: "Create" }],
-                data: JSON.stringify({
-                    Name: data.Name,
-                    Ticker: data.Ticker,
-                    InitialSupply: initialSupplyFormatted,
-                    Logo: data.Logo,
-                }),
+                tags: [
+                    { name: "Action", value: "Create" },
+                    // { name: "Type", value: "Module" },
+                    {
+                        name: "Name",
+                        value: data.Name,
+                    },
+                    {
+                        name: "Ticker",
+                        value: data.Ticker,
+                    },
+                    {
+                        name: "InitialSupply",
+                        value: initialSupplyFormatted,
+                    },
+                    {
+                        name: "Logo",
+                        value: data.Logo,
+                    },
+                ],
             });
-    
+
             console.log("Message ID:", messageId);
             setIsLoading(false);
             return messageId;
@@ -79,7 +88,7 @@ const TokenForm = () => {
         <div>
             <Form {...form}>
                 <form
-                     onSubmit={(event) => {
+                    onSubmit={(event) => {
                         event.preventDefault(); // Prevent default to see if it changes behavior
                         form.handleSubmit(onSubmit)(event); // Explicitly calling handleSubmit
                     }}
@@ -111,7 +120,7 @@ const TokenForm = () => {
                                 onFileSelect={(file, imageId) => {
                                     console.log("File selected:", file);
                                     console.log("Image ID:", imageId);
-                            
+
                                     if (file && imageId) {
                                         form.setValue("Logo", imageId); // Set form value
                                     }
