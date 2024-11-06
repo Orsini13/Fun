@@ -42,7 +42,7 @@ const CustomForm = ({ control, name, label, placeholder }: CustomForm) => {
                                 <Input
                                     placeholder={placeholder}
                                     className='input-class'
-                                    type={name === 'name' || 'symbol' || 'description' ? 'text' : 'url'}
+                                    type={name === 'Name' || 'Ticker' || 'description' ? 'text' : 'url'}
                                     {...field}
                                 />
                             </FormControl>
